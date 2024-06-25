@@ -27,6 +27,8 @@ public class UI_Controller : MonoBehaviour
     [SerializeField] Inventory_Manager shop;
     [SerializeField] Player_Inventory_Manager player;
 
+    [SerializeField] private GameObject helpPanel;
+
     int selectedItemIndex = -1;
 
     // Start is called before the first frame update
@@ -222,5 +224,20 @@ public class UI_Controller : MonoBehaviour
         Inventory_Menu active = GetActivePanel();
         if(active == null) return false;
         return active.name.StartsWith("Inventory");
+    }
+
+    // HELP MENU
+
+    public void QuitGameButton()
+    {
+        Application.Quit();
+    }
+    public void CloseHelpButton()
+    {
+        helpPanel.SetActive(false);
+    }
+    public void HelpButton()
+    {
+        helpPanel.SetActive(!helpPanel.activeInHierarchy);
     }
 }
