@@ -8,8 +8,8 @@ public class Item_Slot : MonoBehaviour
 {
     [HideInInspector] public Cosmetic_Item item;
 
-    [SerializeField] TMP_Text nameText, priceValueText;
-    [SerializeField] Image icon;
+    [SerializeField] protected TMP_Text nameText, priceValueText;
+    [SerializeField] protected Image icon;
     
     public void RefreshSlot(int playerMoney)
     {
