@@ -74,7 +74,7 @@ public class UI_Controller : MonoBehaviour
         return null;
     }
 
-    public void RefreshItens(Cosmetic_Item[] items)
+    public void RefreshItems(Cosmetic_Item[] items)
     {
         Inventory_Menu active = GetActivePanel();
 
@@ -129,9 +129,9 @@ public class UI_Controller : MonoBehaviour
         }
 
         if (playerInventory)
-            RefreshItens(player.GetItens());
+            RefreshItems(player.GetItems());
         else
-            RefreshItens(shop.GetItens());
+            RefreshItems(shop.GetItems());
 
         ClearItemSelection();
     }
@@ -155,7 +155,7 @@ public class UI_Controller : MonoBehaviour
         if (active.itemSlots[selectedItemIndex].item.price <= player.money)
             player.BuyItem(shop.SellItem(selectedItemIndex));
 
-        RefreshItens(shop.GetItens());
+        RefreshItems(shop.GetItems());
         ClearItemSelection();
     }
 
@@ -166,7 +166,7 @@ public class UI_Controller : MonoBehaviour
         if (selectedItemIndex == -1) return;
 
         shop.AddItem(player.SellItem(selectedItemIndex));
-        RefreshItens(player.GetItens());
+        RefreshItems(player.GetItems());
         ClearItemSelection();
     }
 
@@ -177,7 +177,7 @@ public class UI_Controller : MonoBehaviour
         if (selectedItemIndex == -1) return;
 
         player.EquipItem(player.GetItemAt(selectedItemIndex));
-        RefreshItens(player.GetItens());
+        RefreshItems(player.GetItems());
         ClearItemSelection();
     }
 
@@ -188,7 +188,7 @@ public class UI_Controller : MonoBehaviour
         if (selectedItemIndex == -1) return;
 
         player.UnequipItem(player.GetItemAt(selectedItemIndex));
-        RefreshItens(player.GetItens());
+        RefreshItems(player.GetItems());
         ClearItemSelection();
     }
 

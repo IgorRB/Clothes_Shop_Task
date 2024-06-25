@@ -5,7 +5,7 @@ using UnityEngine;
 public class Inventory_Manager : MonoBehaviour
 {
     [SerializeField] protected Inventory inventory;
-    [SerializeField] protected Cosmetic_Item[] startingItens;
+    [SerializeField] protected Cosmetic_Item[] startingItems;
 
     protected string activeTab = "outfit";
 
@@ -14,7 +14,7 @@ public class Inventory_Manager : MonoBehaviour
     {
         inventory.ClearInventory();
 
-        foreach (Cosmetic_Item item in startingItens)
+        foreach (Cosmetic_Item item in startingItems)
         {
             inventory.AddItem(item);
         }
@@ -40,9 +40,9 @@ public class Inventory_Manager : MonoBehaviour
         return activeTab;
     }
 
-    public Cosmetic_Item[] GetItens()
+    public Cosmetic_Item[] GetItems()
     {
-        return inventory.GetItensOfType(activeTab);
+        return inventory.GetItemsOfType(activeTab);
     }
     public Cosmetic_Item GetItemAt(int index)
     {

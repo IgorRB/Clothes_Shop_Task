@@ -15,7 +15,7 @@ public class Player_Inventory_Manager : Inventory_Manager
     {
         inventory.ClearInventory();
 
-        foreach (Cosmetic_Item item in startingItens)
+        foreach (Cosmetic_Item item in startingItems)
         {
             inventory.AddItem(item);
         }
@@ -23,7 +23,7 @@ public class Player_Inventory_Manager : Inventory_Manager
         money = 100;
         UI_Controller.instance.RefreshMoneyText(money);
 
-        InitialCosmeticItens();
+        InitialCosmeticItems();
     }
 
     // Update is called once per frame
@@ -49,7 +49,7 @@ public class Player_Inventory_Manager : Inventory_Manager
         return item;
     }
 
-    void InitialCosmeticItens()
+    void InitialCosmeticItems()
     {
         outfit.SetActive(false);
         hair.SetActive(false);
@@ -57,19 +57,19 @@ public class Player_Inventory_Manager : Inventory_Manager
 
         Cosmetic_Item[] items;
 
-        items = inventory.GetItensOfType("outfit");
+        items = inventory.GetItemsOfType("outfit");
         if (items.Length > 0)
         {
             EquipItem(items[0]);
         }
 
-        items = inventory.GetItensOfType("hair");
+        items = inventory.GetItemsOfType("hair");
         if (items.Length > 0)
         {
             EquipItem(items[0]);
         }
 
-        items = inventory.GetItensOfType("hat");
+        items = inventory.GetItemsOfType("hat");
         if (items.Length > 0)
         {
             EquipItem(items[0]);

@@ -29,6 +29,6 @@ public class Wardrobe : Interactive
         interactingPlayer = player;
         inventory = player.GetComponent<Inventory_Manager>();
         UI_Controller.instance.PanelSetActive("Inventory_Equip_Panel", true);
-        UI_Controller.instance.RefreshItens(inventory.GetItens());
+        UI_Controller.instance.RefreshItems(inventory.GetItems());
     }
 }

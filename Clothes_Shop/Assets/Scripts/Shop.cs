@@ -30,6 +30,6 @@ public class Shop : Interactive
         base.Action(player);
         interactingPlayer = player;
         UI_Controller.instance.PanelSetActive("Shop_Panel", true);
-        UI_Controller.instance.RefreshItens(inventory.GetItens());
+        UI_Controller.instance.RefreshItems(inventory.GetItems());
     }
 }

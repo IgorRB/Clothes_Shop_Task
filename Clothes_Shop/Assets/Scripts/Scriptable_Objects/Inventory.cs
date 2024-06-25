@@ -75,21 +75,21 @@ public class Inventory : ScriptableObject
         return item;
     }
 
-    public Cosmetic_Item[] GetItensOfType(string type)
+    public Cosmetic_Item[] GetItemsOfType(string type)
     {
-        Cosmetic_Item[] itens = new Cosmetic_Item[0];
+        Cosmetic_Item[] items = new Cosmetic_Item[0];
 
         switch (type)
         {
             case "outfit":
-                itens = outfits.ToArray(); break;
+                items = outfits.ToArray(); break;
             case "hair":
-                itens = hairs.ToArray(); break;
+                items = hairs.ToArray(); break;
             case "hat":
-                itens = hats.ToArray(); break;
+                items = hats.ToArray(); break;
             default: break;
         }
         
-        return itens;
+        return items;
     }
 }
