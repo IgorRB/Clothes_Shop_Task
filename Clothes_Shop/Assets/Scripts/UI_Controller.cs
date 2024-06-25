@@ -83,7 +83,10 @@ public class UI_Controller : MonoBehaviour
             if (i < items.Length)
                 active.itemSlots[i].item = items[i];
 
-            active.itemSlots[i].RefreshSlot(player.money);
+            if (active.name.Contains("Equip"))
+                active.itemSlots[i].GetComponent<Item_Slot_Equip>().RefreshSlot(player.GetEquipped());
+            else
+                active.itemSlots[i].RefreshSlot(player.money);
         }
 
         if (!active.itemSlots[0].gameObject.activeInHierarchy)
@@ -161,6 +164,28 @@ public class UI_Controller : MonoBehaviour
         if (selectedItemIndex == -1) return;
 
         shop.AddItem(player.SellItem(selectedItemIndex));
+        RefreshItens(player.GetItens());
+        ClearItemSelection();
+    }
+
+    public void EquipButton()
+    {
+        Inventory_Menu active = GetActivePanel();
+
+        if (selectedItemIndex == -1) return;
+
+        player.EquipItem(player.GetItemAt(selectedItemIndex));
+        RefreshItens(player.GetItens());
+        ClearItemSelection();
+    }
+
+    public void UnequipButton()
+    {
+        Inventory_Menu active = GetActivePanel();
+
+        if (selectedItemIndex == -1) return;
+
+        player.UnequipItem(player.GetItemAt(selectedItemIndex));
         RefreshItens(player.GetItens());
         ClearItemSelection();
     }

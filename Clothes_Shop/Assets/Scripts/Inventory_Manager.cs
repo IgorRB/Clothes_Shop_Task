@@ -44,6 +44,11 @@ public class Inventory_Manager : MonoBehaviour
     {
         return inventory.GetItensOfType(activeTab);
     }
+    public Cosmetic_Item GetItemAt(int index)
+    {
+        Cosmetic_Item item = inventory.GetItem(index, activeTab);
+        return item;
+    }
     virtual public Cosmetic_Item SellItem(int index)
     {
         return inventory.RemoveItem(index, activeTab);

@@ -30,6 +30,27 @@ public class Inventory : ScriptableObject
         }
     }
 
+    public Cosmetic_Item GetItem(int index, string type)
+    {
+        Cosmetic_Item item = null;
+
+        switch (type)
+        {
+            case "outfit":
+                item = outfits[index];
+                break;
+            case "hair":
+                item = hairs[index];
+                break;
+            case "hat":
+                item = hats[index];
+                break;
+            default: break;
+        }
+
+        return item;
+    }
+
     public Cosmetic_Item RemoveItem(int index, string type)
     {
         Cosmetic_Item item = null;
