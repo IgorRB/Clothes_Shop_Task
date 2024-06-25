@@ -107,6 +107,9 @@ public class Player_Inventory_Manager : Inventory_Manager
             case "hat":
                 if(equippedHat == item)
                 {
+                    if (equippedHair != null)
+                        hair.SetActive(true);
+
                     equippedHat = null;
                     hat.SetActive(false);
                 }
@@ -138,5 +141,11 @@ public class Player_Inventory_Manager : Inventory_Manager
                 break;
             default: break;
         }
+    }
+
+    public void AddMoney()
+    {
+        money += 50;
+        UI_Controller.instance.RefreshMoneyText(money);
     }
 }
