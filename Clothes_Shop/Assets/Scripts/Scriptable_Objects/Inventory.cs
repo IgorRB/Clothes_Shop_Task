@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 [CreateAssetMenu(fileName = "My_Inventory", menuName = "ScriptableObjects/InventoryScriptableObject", order = 1)]
 public class Inventory : ScriptableObject
