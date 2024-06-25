@@ -8,10 +8,14 @@ public class Inventory_Manager : MonoBehaviour
 
     [SerializeField] Cosmetic_Item[] testItens;
 
+    [HideInInspector] public int money;
+    private string activeIventoryTab = "outfit";
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        money = 100;
+        UI_Controller.instance.RefreshMoneyText(money);
     }
 
     // Update is called once per frame
@@ -33,5 +37,17 @@ public class Inventory_Manager : MonoBehaviour
     public void AddItem(Cosmetic_Item item)
     {
         inventory.AddItem(item);
+    }
+
+    public void BuyItem(Cosmetic_Item item)
+    {
+        money -= item.price;
+        UI_Controller.instance.RefreshMoneyText(money);
+        inventory.AddItem(item);
+    }
+
+    public void SetInventoryTab(string tab)
+    {
+        activeIventoryTab = tab;
     }
 }

@@ -17,15 +17,7 @@ public class Shop : Interactive
 
         foreach(Cosmetic_Item item in startingItens)
         {
-            switch (item.type)
-            {
-                case "outfit":
-                    inventory.AddItem(item); break;
-                case "hair":
-                    inventory.AddItem(item); break;
-                case "hat":
-                    inventory.AddItem(item); break;
-            }
+            inventory.AddItem(item);
         }
     }
 
@@ -36,7 +28,7 @@ public class Shop : Interactive
         {
             if(interactingPlayer.interactingWith != this)
             {
-                UI_Controller.instance.ShopSetActive(false);
+                UI_Controller.instance.PanelSetActive("Shop_Panel" ,false);
                 interactingPlayer = null;
             }
         }
@@ -46,7 +38,7 @@ public class Shop : Interactive
     {
         base.Action(player);
         interactingPlayer = player;
-        UI_Controller.instance.ShopSetActive(true);
+        UI_Controller.instance.PanelSetActive("Shop_Panel", true);
         UI_Controller.instance.RefreshItens(GetItens());
     }
 
@@ -60,7 +52,7 @@ public class Shop : Interactive
         return inventory.GetItensOfType(activeShopTab);
     }
 
-    public Cosmetic_Item BuyItem(int index)
+    public Cosmetic_Item SellItem(int index)
     {
         return inventory.RemoveItem(index, activeShopTab);
     }

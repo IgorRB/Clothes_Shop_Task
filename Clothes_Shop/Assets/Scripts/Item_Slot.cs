@@ -6,7 +6,27 @@ using TMPro;
 
 public class Item_Slot : MonoBehaviour
 {
-    public TMP_Text nameText, priceValueText;
-    public Image icon;
-    //public GameObject itemFrame;
+    [HideInInspector] public Cosmetic_Item item;
+
+    [SerializeField] TMP_Text nameText, priceValueText;
+    [SerializeField] Image icon;
+    
+    public void RefreshSlot(int playerMoney)
+    {
+        if (item == null)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+
+        gameObject.SetActive(true);
+        nameText.text = item.nameItem;
+        priceValueText.text = item.price.ToString() + "$ ";
+        icon.sprite = item.icon;
+
+        if (playerMoney < item.price)
+            priceValueText.color = Color.red;
+        else
+            priceValueText.color = Color.black;
+    }
 }

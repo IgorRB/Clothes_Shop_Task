@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UI_Controller : MonoBehaviour
 {
@@ -21,9 +22,8 @@ public class UI_Controller : MonoBehaviour
     }
 
     // Variables and References
-    [SerializeField] private GameObject shopPanel, soldOutText;
-    [SerializeField] Item_Slot[] itemSlots;
-    [SerializeField] Button[] shopButtons;
+    [SerializeField] private Inventory_Menu[] menuPanels;
+    [SerializeField] private TMP_Text moneyText;
     [SerializeField] Shop shop;
     [SerializeField] Inventory_Manager playerInventory;
 
@@ -32,8 +32,10 @@ public class UI_Controller : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        shopPanel.SetActive(false);
-        shopButtons[0].GetComponent<Image>().color = new Color(.75f, .75f, .75f);
+        foreach (Inventory_Menu panel in menuPanels)
+        {
+            panel.gameObject.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -42,36 +44,56 @@ public class UI_Controller : MonoBehaviour
 
     }
 
-    public void ShopSetActive(bool value)
+    public void PanelSetActive(string name, bool value, bool closeOthers = false)
     {
-        shopPanel.SetActive(value);
+        foreach(Inventory_Menu panel in menuPanels)
+        {
+            if(panel.name == name)
+            {
+                panel.gameObject.SetActive(value);
+                panel.tabButtons[0].gameObject.GetComponent<Image>().color = new Color(.75f, .75f, .75f);
+            }                
+            else if(closeOthers)
+                panel.gameObject.SetActive(false);
+        }
     }
 
-    public void RefreshItens(Cosmetic_Item[] itens)
+    Inventory_Menu GetActivePanel()
     {
-        foreach(Item_Slot slot in itemSlots)
+        foreach( Inventory_Menu panel in menuPanels)
         {
-            slot.gameObject.SetActive(false);
+            if(panel.gameObject.activeInHierarchy)
+                return panel;
         }
 
-        for (int i = 0; i < itens.Length; i++)
-        {
-            itemSlots[i].gameObject.SetActive(true);
-            itemSlots[i].nameText.text = itens[i].nameItem;
-            itemSlots[i].priceValueText.text = itens[i].price.ToString() + "$";
+        return null;
+    }
 
-            itemSlots[i].icon.sprite = itens[i].icon;
+    public void RefreshItens(Cosmetic_Item[] items)
+    {
+        Inventory_Menu active = GetActivePanel();
+
+        for (int i = 0; i < 4; i++)
+        {
+            active.itemSlots[i].item = null;
+
+            if (i < items.Length)
+                active.itemSlots[i].item = items[i];
+
+            active.itemSlots[i].RefreshSlot(playerInventory.money);
         }
 
-        if (!itemSlots[0].gameObject.activeInHierarchy)
-            soldOutText.SetActive(true);
+        if (!active.itemSlots[0].gameObject.activeInHierarchy)
+            active.emptyText.SetActive(true);
         else
-            soldOutText.SetActive(false);
+            active.emptyText.SetActive(false);
     }
 
     public void TabButtonClick(string type)
     {
-        foreach (Button button in shopButtons)
+        Inventory_Menu active = GetActivePanel();
+
+        foreach (Button button in active.tabButtons)
         {
             button.GetComponent<Image>().color = Color.white;
         }
@@ -81,13 +103,13 @@ public class UI_Controller : MonoBehaviour
         switch (type)
         {
             case "outfit":
-                shopButtons[0].GetComponent<Image>().color = new Color(.75f, .75f, .75f);
+                active.tabButtons[0].GetComponent<Image>().color = new Color(.75f, .75f, .75f);
                 break;
             case "hair":
-                shopButtons[1].GetComponent<Image>().color = new Color(.75f, .75f, .75f);
+                active.tabButtons[1].GetComponent<Image>().color = new Color(.75f, .75f, .75f);
                 break;
             case "hat":
-                shopButtons[2].GetComponent<Image>().color = new Color(.75f, .75f, .75f);
+                active.tabButtons[2].GetComponent<Image>().color = new Color(.75f, .75f, .75f);
                 break;
             default: break;
         }
@@ -98,30 +120,51 @@ public class UI_Controller : MonoBehaviour
 
     public void ItemButtonClick(int index)
     {
+        Inventory_Menu active = GetActivePanel();
         ClearItemSelection();
 
         selectedItemIndex = index;
 
-        itemSlots[index].GetComponent<Image>().color = new Color(1, 0.796f, 0.3125f, 1);
+        active.itemSlots[index].GetComponent<Image>().color = new Color(1, 0.796f, 0.3125f, 1);
     }
 
     public void BuyButton()
     {
+        Inventory_Menu active = GetActivePanel();
+
         if (selectedItemIndex == -1) return;
 
-        playerInventory.AddItem(shop.BuyItem(selectedItemIndex));
+        if (active.itemSlots[selectedItemIndex].item.price <= playerInventory.money)
+            playerInventory.BuyItem(shop.SellItem(selectedItemIndex));
 
         RefreshItens(shop.GetItens());
         ClearItemSelection();
     }
 
+    public void GoToButton(string name)
+    {
+        PanelSetActive(name, true, true);
+    }
+
     void ClearItemSelection()
     {
-        foreach (Item_Slot slot in itemSlots)
+        Inventory_Menu active = GetActivePanel();
+
+        foreach (Item_Slot slot in active.itemSlots)
         {
             slot.GetComponent<Image>().color = new Color(1, 1, 1, 0);
         }
 
         selectedItemIndex = -1;
+    }
+
+    public void RefreshMoneyText(int value)
+    {
+        moneyText.text = value.ToString() + "$";
+    }
+
+    public void CloseButton(string panel)
+    {
+        PanelSetActive(panel, false);
     }
 }
