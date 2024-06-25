@@ -3203,14 +3203,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 565931762}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3d31ca98d7d16648a68249fd3b85399, type: 3}
+  m_Script: {fileID: 11500000, guid: 95ae3272f60178b4da580062cd92265b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: b9ba20d72deaee543b55b74c7d694076, type: 2}
-  testItens:
+  startingItens:
   - {fileID: 11400000, guid: 64d873d1bc68e3f4f9238aa9dc0476e7, type: 2}
-  - {fileID: 11400000, guid: 135cb8f4257cd274f83121b8a87f41bb, type: 2}
-  - {fileID: 11400000, guid: 96cf7e1fa5dc540458f86adb91f145ed, type: 2}
   money: 0
 --- !u!1 &570068713
 GameObject:
@@ -3660,7 +3658,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1637634664}
         m_TargetAssemblyTypeName: UI_Controller, Assembly-CSharp
-        m_MethodName: BuyButton
+        m_MethodName: SellButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5822,6 +5820,7 @@ GameObject:
   - component: {fileID: 1055103356}
   - component: {fileID: 1055103358}
   - component: {fileID: 1055103359}
+  - component: {fileID: 1055103360}
   m_Layer: 0
   m_Name: Shop
   m_TagString: Interactive
@@ -5953,12 +5952,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e4b6699471a65644afffd92aadef47f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1055103360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055103355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3d31ca98d7d16648a68249fd3b85399, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: ff6902c5baa392e4aa4857e1da163129, type: 2}
   startingItens:
-  - {fileID: 11400000, guid: c52ef838fe6673744bba9d0b2273365d, type: 2}
-  - {fileID: 11400000, guid: a74b75d010d9a4d45ac1fd7a318c7137, type: 2}
-  - {fileID: 11400000, guid: a7b5dd47cc427ab448877b26fdf5bd8b, type: 2}
+  - {fileID: 11400000, guid: 135cb8f4257cd274f83121b8a87f41bb, type: 2}
+  - {fileID: 11400000, guid: 8026ccc3106164643bca2ee9b4dbbe5e, type: 2}
+  - {fileID: 11400000, guid: 84d5a69f24b47574895f0f860f63bebe, type: 2}
+  - {fileID: 11400000, guid: 500a82f0a3ec7164b848ed2729822ba9, type: 2}
   - {fileID: 11400000, guid: 96cf7e1fa5dc540458f86adb91f145ed, type: 2}
+  - {fileID: 11400000, guid: b7f6b76810004c64ab832ade7f00118f, type: 2}
+  - {fileID: 11400000, guid: a7b5dd47cc427ab448877b26fdf5bd8b, type: 2}
+  - {fileID: 11400000, guid: a74b75d010d9a4d45ac1fd7a318c7137, type: 2}
+  - {fileID: 11400000, guid: c52ef838fe6673744bba9d0b2273365d, type: 2}
 --- !u!1 &1056752735
 GameObject:
   m_ObjectHideFlags: 0
@@ -9526,8 +9542,8 @@ MonoBehaviour:
   - {fileID: 28579778}
   - {fileID: 1149588844}
   moneyText: {fileID: 848469154}
-  shop: {fileID: 1055103359}
-  playerInventory: {fileID: 565931768}
+  shop: {fileID: 1055103360}
+  player: {fileID: 565931768}
 --- !u!1 &1750056889
 GameObject:
   m_ObjectHideFlags: 0
@@ -10887,7 +10903,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2102855225
 Transform:
   m_ObjectHideFlags: 0

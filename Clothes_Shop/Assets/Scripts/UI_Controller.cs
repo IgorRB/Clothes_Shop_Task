@@ -24,8 +24,8 @@ public class UI_Controller : MonoBehaviour
     // Variables and References
     [SerializeField] private Inventory_Menu[] menuPanels;
     [SerializeField] private TMP_Text moneyText;
-    [SerializeField] Shop shop;
-    [SerializeField] Inventory_Manager playerInventory;
+    [SerializeField] Inventory_Manager shop;
+    [SerializeField] Player_Inventory_Manager player;
 
     int selectedItemIndex = -1;
 
@@ -51,7 +51,10 @@ public class UI_Controller : MonoBehaviour
             if(panel.name == name)
             {
                 panel.gameObject.SetActive(value);
-                panel.tabButtons[0].gameObject.GetComponent<Image>().color = new Color(.75f, .75f, .75f);
+                if (IsPlayerInventory())
+                    TabButtonClick(player.GetTab());
+                else
+                    TabButtonClick(shop.GetTab());
             }                
             else if(closeOthers)
                 panel.gameObject.SetActive(false);
@@ -80,7 +83,7 @@ public class UI_Controller : MonoBehaviour
             if (i < items.Length)
                 active.itemSlots[i].item = items[i];
 
-            active.itemSlots[i].RefreshSlot(playerInventory.money);
+            active.itemSlots[i].RefreshSlot(player.money);
         }
 
         if (!active.itemSlots[0].gameObject.activeInHierarchy)
@@ -92,13 +95,19 @@ public class UI_Controller : MonoBehaviour
     public void TabButtonClick(string type)
     {
         Inventory_Menu active = GetActivePanel();
+        bool playerInventory = IsPlayerInventory();
+
+        if (active == null) return;
 
         foreach (Button button in active.tabButtons)
         {
             button.GetComponent<Image>().color = Color.white;
         }
 
-        shop.SetShopTab(type);
+        if (playerInventory)
+            player.SetTab(type);
+        else
+            shop.SetTab(type);
 
         switch (type)
         {
@@ -114,7 +123,11 @@ public class UI_Controller : MonoBehaviour
             default: break;
         }
 
-        RefreshItens(shop.GetItens());
+        if (playerInventory)
+            RefreshItens(player.GetItens());
+        else
+            RefreshItens(shop.GetItens());
+
         ClearItemSelection();
     }
 
@@ -134,10 +147,21 @@ public class UI_Controller : MonoBehaviour
 
         if (selectedItemIndex == -1) return;
 
-        if (active.itemSlots[selectedItemIndex].item.price <= playerInventory.money)
-            playerInventory.BuyItem(shop.SellItem(selectedItemIndex));
+        if (active.itemSlots[selectedItemIndex].item.price <= player.money)
+            player.BuyItem(shop.SellItem(selectedItemIndex));
 
         RefreshItens(shop.GetItens());
+        ClearItemSelection();
+    }
+
+    public void SellButton()
+    {
+        Inventory_Menu active = GetActivePanel();
+
+        if (selectedItemIndex == -1) return;
+
+        shop.AddItem(player.SellItem(selectedItemIndex));
+        RefreshItens(player.GetItens());
         ClearItemSelection();
     }
 
@@ -166,5 +190,12 @@ public class UI_Controller : MonoBehaviour
     public void CloseButton(string panel)
     {
         PanelSetActive(panel, false);
+    }
+
+    public bool IsPlayerInventory()
+    {
+        Inventory_Menu active = GetActivePanel();
+        if(active == null) return false;
+        return active.name.StartsWith("Inventory");
     }
 }

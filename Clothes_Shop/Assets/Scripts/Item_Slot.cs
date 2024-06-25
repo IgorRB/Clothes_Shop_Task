@@ -21,10 +21,10 @@ public class Item_Slot : MonoBehaviour
 
         gameObject.SetActive(true);
         nameText.text = item.nameItem;
-        priceValueText.text = item.price.ToString() + "$ ";
+        priceValueText.text = item.price.ToString() + "$";
         icon.sprite = item.icon;
 
-        if (playerMoney < item.price)
+        if (playerMoney < item.price && !UI_Controller.instance.IsPlayerInventory())
             priceValueText.color = Color.red;
         else
             priceValueText.color = Color.black;

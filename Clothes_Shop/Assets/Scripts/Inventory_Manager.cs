@@ -4,34 +4,26 @@ using UnityEngine;
 
 public class Inventory_Manager : MonoBehaviour
 {
-    [SerializeField] Inventory inventory;
+    [SerializeField] protected Inventory inventory;
+    [SerializeField] protected Cosmetic_Item[] startingItens;
 
-    [SerializeField] Cosmetic_Item[] testItens;
-
-    [HideInInspector] public int money;
-    private string activeIventoryTab = "outfit";
+    protected string activeTab = "outfit";
 
     // Start is called before the first frame update
     void Start()
     {
-        money = 100;
-        UI_Controller.instance.RefreshMoneyText(money);
+        inventory.ClearInventory();
+
+        foreach (Cosmetic_Item item in startingItens)
+        {
+            inventory.AddItem(item);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         
-        // Testing zone
-        if (Input.GetKeyDown(KeyCode.J))
-            inventory.AddItem(testItens[0]);
-        if (Input.GetKeyDown(KeyCode.K))
-            inventory.AddItem(testItens[1]);
-        if (Input.GetKeyDown(KeyCode.L))
-            inventory.AddItem(testItens[2]);
-        if (Input.GetKeyDown(KeyCode.P))
-            inventory.ClearInventory();
-
     }
 
     public void AddItem(Cosmetic_Item item)
@@ -39,15 +31,21 @@ public class Inventory_Manager : MonoBehaviour
         inventory.AddItem(item);
     }
 
-    public void BuyItem(Cosmetic_Item item)
+    public void SetTab(string tab)
     {
-        money -= item.price;
-        UI_Controller.instance.RefreshMoneyText(money);
-        inventory.AddItem(item);
+        activeTab = tab;
+    }
+    public string GetTab()
+    {
+        return activeTab;
     }
 
-    public void SetInventoryTab(string tab)
+    public Cosmetic_Item[] GetItens()
     {
-        activeIventoryTab = tab;
+        return inventory.GetItensOfType(activeTab);
+    }
+    virtual public Cosmetic_Item SellItem(int index)
+    {
+        return inventory.RemoveItem(index, activeTab);
     }
 }

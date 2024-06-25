@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 749f1c97ec0bde64d98886da4d7c0ec3, type: 3}
-  m_Name: Hat_Pfht
+  m_Name: Hat_Pnty
   m_EditorClassIdentifier: 
-  nameItem: Leather Helmet
-  icon: {fileID: 21300000, guid: 9ea862d52ea875b4199b19e3b4ce9f1e, type: 3}
-  animator: {fileID: 22100000, guid: c1f88001fa3dbb840ae12ed3525449de, type: 2}
-  price: 60
+  nameItem: Witch Hat
+  icon: {fileID: 21300000, guid: eef983c4aaf09364fa10dbcc8f41b057, type: 3}
+  animator: {fileID: 22100000, guid: b3872e4b686f95c4cb04b08e7d40683a, type: 2}
+  price: 100
   type: hat
