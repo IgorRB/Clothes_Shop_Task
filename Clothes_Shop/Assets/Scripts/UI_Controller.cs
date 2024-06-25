@@ -53,6 +53,7 @@ public class UI_Controller : MonoBehaviour
             if(panel.name == name)
             {
                 panel.gameObject.SetActive(value);
+                helpPanel.SetActive(false);
                 if (IsPlayerInventory())
                     TabButtonClick(player.GetTab());
                 else
