@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class UI_Controller : MonoBehaviour
 {
@@ -31,9 +32,13 @@ public class UI_Controller : MonoBehaviour
 
     int selectedItemIndex = -1;
 
+    private EventSystem eventSystem;
+
     // Start is called before the first frame update
     void Start()
     {
+        eventSystem = EventSystem.current;
+
         foreach (Inventory_Menu panel in menuPanels)
         {
             panel.gameObject.SetActive(false);
@@ -53,7 +58,6 @@ public class UI_Controller : MonoBehaviour
             if(panel.name == name)
             {
                 panel.gameObject.SetActive(value);
-                helpPanel.SetActive(false);
                 if (IsPlayerInventory())
                     TabButtonClick(player.GetTab());
                 else
@@ -62,6 +66,8 @@ public class UI_Controller : MonoBehaviour
             else if(closeOthers)
                 panel.gameObject.SetActive(false);
         }
+
+        eventSystem.SetSelectedGameObject(null);
     }
 
     Inventory_Menu GetActivePanel()
